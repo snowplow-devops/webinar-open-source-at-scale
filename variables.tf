@@ -81,7 +81,7 @@ variable "ec2_collector_max_size" {
 
 variable "ec2_collector_instance_type" {
   description = "Instance type for Collector"
-  type        = number
+  type        = string
 }
 
 variable "ec2_enrich_min_size" {
@@ -96,7 +96,7 @@ variable "ec2_enrich_max_size" {
 
 variable "ec2_enrich_instance_type" {
   description = "Instance type for Enrich"
-  type        = number
+  type        = string
 }
 
 variable "dyndb_enrich_kcl_read_min_capacity" {
@@ -121,7 +121,7 @@ variable "dyndb_enrich_kcl_write_max_capacity" {
 
 variable "ec2_transformer_instance_type" {
   description = "Instance type for Transformer"
-  type        = number
+  type        = string
 }
 
 variable "dyndb_transformer_kcl_read_min_capacity" {
