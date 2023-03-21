@@ -7,7 +7,6 @@ variable "snowflake_password" {
 variable "aws_region" {
   description = "The AWS region to deploy into"
   type        = string
-  default     = "ap-southeast-2"
 }
 
 variable "aws_assume_role_arn" {
@@ -16,14 +15,12 @@ variable "aws_assume_role_arn" {
 }
 
 variable "aws_iam_permissions_boundary" {
-  description = "The permissions boundary ARN to set on IAM roles created"
-  default     = ""
+  description = "The permissions boundary ARN to set on IAM roles created (can be empty if you do not require one in your AWS account)"
   type        = string
 }
 
 variable "user_provided_id" {
   description = "An optional unique identifier to identify the telemetry events emitted by this stack"
-  default     = ""
   type        = string
 }
 

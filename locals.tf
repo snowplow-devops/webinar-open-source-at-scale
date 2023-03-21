@@ -1,6 +1,8 @@
 locals {
-  prefix = "webinar-os"
+  # --- Change this to a unique value to avoid conflicts
+  prefix = "sp-osatscale"
 
+  # --- Network settings (fetch these from the AWS console)
   vpc_id = "vpc-07f29d40eb1905e46"
   subnet_ids = [
     "subnet-0ccc4ee3ff14a876d",
@@ -8,14 +10,15 @@ locals {
     "subnet-0e590635d36d4f023"
   ]
 
+  # --- The IP Address that you will be accessing servers from (your public IPv4 address)
   ssh_ip_allowlist = [
     "54.66.204.91/32"
   ]
 
-  custom_iglu_resolvers = []
-
+  # --- Change this to your own SSH Public Key for access to the servers over SSH
   ssh_public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDOKjtQQavckbl5tzdUv8kZbCCnb16uWWksp8J6tkZfA/HZdFAj04Hs0gV17pZSZoQMxLmflVBegsOKqWmXtp4pGpWk0T+dmSYRK5AV8+J+5NiIJcaEDKVTpV3nVzDIpgMmHprH+HEJiGU7jggsUIMxOPc61jcq7SeVe2GAr8HJ3M1EXf7PNAUanimHNM0IvuTOskhGJCpFihUqbpa480wR0tjS7EMg52yFOtyOsXZh6Quzljtoh/xLzsLgLR3YL/6Ulk56SApF2eiXPvGC8qoSmKbLH8x8AyqnBoXOvkv8riP809m1aIzC5TGKm0U2iAPfbuC3bdJ2oZtC+0FOvm4Y8t+BOpz8UvVHHzbVvZGM/Pm9kKMWF6NKHmWgXROtkiGnVb+EyNplGWqCbSs3tOhhGVkssm+9J0gafF8Co1+9tQz3xIwGkwUIvfvVe0ZoDEZZJBeU/6Zuq4CUEBkndPUyaNhDYNEFg81iVuTByfNP5ZNsAPKrMtmCu6uzN5cyCxgzZsE9EknWNYueBp2bIz12N7z8QWHguUCzY1XGNxJIwPoLz83wTWMEe8RX0//gB9ELtw8I1IeiqYF024EZVQHOIaunt8eRJ73AEYQKNFM1tDNfoHtp0G009QV+lW6Z0WqkvNhBu4P2Qr3ub2pWzvWwmw6AiFKUd546tgOWti6Dnw== jbeemster@Joshuas-MacBook-Pro.local"
 
+  # --- Snowflake settings (Note: update these to your own values!)
   snowflake_loader_user = "JOSHB_OS_USER"
   snowflake_warehouse   = "JOSHB_OS_WH"
   snowflake_database    = "JOSHB_OS_DB"
@@ -27,7 +30,7 @@ locals {
   kinesis_stream_mode_details = "PROVISIONED" # Change to: "ON_DEMAND" to have it auto-scale
 
   # --- EC2 scaling options
-  ec2_enable_auto_scaling = false # Change to: true to have EC2 groups auto-scale based on CPU
+  ec2_enable_auto_scaling = false # Change to: "true" to have EC2 groups auto-scale based on CPU
 
   # EC2 settings for Collector
   ec2_collector_min_size      = 1

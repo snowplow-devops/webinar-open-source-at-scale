@@ -97,8 +97,6 @@ module "enrich_kinesis" {
   ssh_key_name     = aws_key_pair.pipeline.key_name
   ssh_ip_allowlist = local.ssh_ip_allowlist
 
-  custom_iglu_resolvers = local.custom_iglu_resolvers
-
   enable_auto_scaling = local.ec2_enable_auto_scaling
   min_size            = local.ec2_enrich_min_size
   max_size            = local.ec2_enrich_max_size
@@ -143,8 +141,6 @@ module "transformer_wrj" {
   ssh_key_name     = aws_key_pair.pipeline.key_name
   ssh_ip_allowlist = local.ssh_ip_allowlist
 
-  custom_iglu_resolvers = local.custom_iglu_resolvers
-
   instance_type = local.ec2_transformer_instance_type
 
   kcl_read_min_capacity  = local.dyndb_transformer_kcl_read_min_capacity
@@ -178,8 +174,6 @@ module "sf_loader" {
 
   ssh_key_name     = aws_key_pair.pipeline.key_name
   ssh_ip_allowlist = local.ssh_ip_allowlist
-
-  custom_iglu_resolvers = local.custom_iglu_resolvers
 
   iam_permissions_boundary = var.aws_iam_permissions_boundary
   user_provided_id         = var.user_provided_id
