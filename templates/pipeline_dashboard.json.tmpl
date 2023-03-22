@@ -1,0 +1,218 @@
+{
+    "widgets": [
+        {
+            "height": 6,
+            "width": 8,
+            "y": 0,
+            "x": 0,
+            "type": "metric",
+            "properties": {
+                "metrics": [
+                    [ "AWS/ApplicationELB", "RequestCount", "LoadBalancer", "${collector_lb_arn}" ],
+                    [ ".", "HTTPCode_Target_2XX_Count", ".", "." ],
+                    [ ".", "HTTPCode_Target_4XX_Count", ".", "." ],
+                    [ ".", "HTTPCode_ELB_4XX_Count", ".", "." ],
+                    [ ".", "HTTPCode_ELB_5XX_Count", ".", "." ]
+                ],
+                "view": "timeSeries",
+                "stacked": false,
+                "region": "${aws_region}",
+                "period": 60,
+                "stat": "Sum",
+                "legend": {
+                    "position": "right"
+                },
+                "title": "StatusCodes for the Collector",
+                "liveData": true
+            }
+        },
+        {
+            "height": 6,
+            "width": 8,
+            "y": 6,
+            "x": 8,
+            "type": "metric",
+            "properties": {
+                "metrics": [
+                    [ "AWS/EC2", "CPUUtilization", "AutoScalingGroupName", "${prefix}-collector-server" ],
+                    [ "...", "${prefix}-enrich-server" ],
+                    [ "...", "${prefix}-transformer-server-wrj" ],
+                    [ "...", "${prefix}-sf-loader-server" ]
+                ],
+                "view": "timeSeries",
+                "stacked": false,
+                "region": "${aws_region}",
+                "period": 60,
+                "title": "Max CPU over Pipeline services (indicates pressure on the application)",
+                "stat": "Maximum",
+                "legend": {
+                    "position": "right"
+                },
+                "liveData": true
+            }
+        },
+        {
+            "height": 6,
+            "width": 8,
+            "y": 6,
+            "x": 0,
+            "type": "metric",
+            "properties": {
+                "metrics": [
+                    [ "AWS/Kinesis", "WriteProvisionedThroughputExceeded", "StreamName", "${prefix}-raw-stream" ],
+                    [ "...", "${prefix}-enriched-stream" ],
+                    [ "...", "${prefix}-bad-1-stream" ]
+                ],
+                "view": "timeSeries",
+                "stacked": false,
+                "region": "${aws_region}",
+                "period": 60,
+                "stat": "Sum",
+                "legend": {
+                    "position": "right"
+                },
+                "title": "WriteProvisionedThroughputExceeded per Stream (indicates back-pressure on writing apps)",
+                "liveData": true
+            }
+        },
+        {
+            "height": 6,
+            "width": 8,
+            "y": 6,
+            "x": 16,
+            "type": "metric",
+            "properties": {
+                "metrics": [
+                    [ "AWS/Kinesis", "GetRecords.IteratorAgeMilliseconds", "StreamName", "${prefix}-raw-stream" ],
+                    [ "...", "${prefix}-enriched-stream" ]
+                ],
+                "view": "timeSeries",
+                "stacked": false,
+                "region": "${aws_region}",
+                "period": 60,
+                "stat": "Maximum",
+                "legend": {
+                    "position": "right"
+                },
+                "title": "GetRecords.IteratorAgeMilliseconds per Stream (indicates consumers are falling behind)",
+                "liveData": true
+            }
+        },
+        {
+            "height": 6,
+            "width": 8,
+            "y": 0,
+            "x": 8,
+            "type": "metric",
+            "properties": {
+                "metrics": [
+                    [ "AWS/Kinesis", "IncomingRecords", "StreamName", "${prefix}-raw-stream" ],
+                    [ "...", "${prefix}-enriched-stream" ],
+                    [ "...", "${prefix}-bad-1-stream" ]
+                ],
+                "view": "timeSeries",
+                "stacked": false,
+                "region": "${aws_region}",
+                "stat": "Sum",
+                "period": 60,
+                "legend": {
+                    "position": "right"
+                },
+                "title": "IncomingRecords per Stream",
+                "liveData": true
+            }
+        },
+        {
+            "height": 6,
+            "width": 8,
+            "y": 0,
+            "x": 16,
+            "type": "metric",
+            "properties": {
+                "metrics": [
+                    [ "AWS/ApplicationELB", "TargetResponseTime", "LoadBalancer", "${collector_lb_arn}" ]
+                ],
+                "view": "timeSeries",
+                "stacked": false,
+                "region": "${aws_region}",
+                "period": 60,
+                "legend": {
+                    "position": "right"
+                },
+                "title": "TargetResponseTime for the Collector (indicates if the service can handle load)",
+                "liveData": true,
+                "stat": "Average"
+            }
+        },
+        {
+            "height": 6,
+            "width": 8,
+            "y": 12,
+            "x": 16,
+            "type": "metric",
+            "properties": {
+                "metrics": [
+                    [ "AWS/SQS", "ApproximateAgeOfOldestMessage", "QueueName", "${prefix}-sf-loader.fifo", { "stat": "Maximum" } ],
+                    [ ".", "NumberOfMessagesSent", ".", "." ],
+                    [ ".", "NumberOfMessagesDeleted", ".", "." ]
+                ],
+                "view": "timeSeries",
+                "stacked": false,
+                "region": "${aws_region}",
+                "stat": "Sum",
+                "period": 60,
+                "title": "Snowflake Loader queue status (indicates loader is failling behind)",
+                "legend": {
+                    "position": "right"
+                },
+                "liveData": true
+            }
+        },
+        {
+            "height": 6,
+            "width": 8,
+            "y": 12,
+            "x": 8,
+            "type": "metric",
+            "properties": {
+                "metrics": [
+                    [ "AWS/AutoScaling", "GroupInServiceInstances", "AutoScalingGroupName", "${prefix}-collector-server" ],
+                    [ "...", "${prefix}-enrich-server" ]
+                ],
+                "view": "timeSeries",
+                "stacked": false,
+                "region": "${aws_region}",
+                "stat": "Sum",
+                "period": 60,
+                "title": "InServiceInstances for Collector and Enrich",
+                "legend": {
+                    "position": "right"
+                }
+            }
+        },
+        {
+            "height": 6,
+            "width": 8,
+            "y": 12,
+            "x": 0,
+            "type": "metric",
+            "properties": {
+                "metrics": [
+                    [ "AWS/DynamoDB", "ProvisionedWriteCapacityUnits", "TableName", "${prefix}-enrich-server" ],
+                    [ ".", "ProvisionedReadCapacityUnits", ".", "." ],
+                    [ ".", "ProvisionedWriteCapacityUnits", ".", "${prefix}-transformer-server-wrj" ],
+                    [ ".", "ProvisionedReadCapacityUnits", ".", "." ]
+                ],
+                "view": "timeSeries",
+                "stacked": false,
+                "region": "${aws_region}",
+                "stat": "Sum",
+                "period": 60,
+                "legend": {
+                    "position": "right"
+                },
+                "title": "Read/Write Capacity for KCL Tables"
+            }
+        }
+    ]
+}

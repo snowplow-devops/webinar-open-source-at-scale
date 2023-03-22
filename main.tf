@@ -179,3 +179,25 @@ module "sf_loader" {
   user_provided_id         = var.user_provided_id
   telemetry_enabled        = var.telemetry_enabled
 }
+
+# --- CLOUDWATCH DASHBOARD
+
+data "aws_caller_identity" "current" {}
+
+locals {
+  collector_lb_arn_cw_id = replace(
+    module.collector_lb.arn,
+    "arn:aws:elasticloadbalancing:${var.aws_region}:${data.aws_caller_identity.current.account_id}:loadbalancer/",
+    ""
+  )
+}
+
+resource "aws_cloudwatch_dashboard" "pipeline" {
+  dashboard_name = "${var.prefix}-pipeline"
+
+  dashboard_body = templatefile("./templates/pipeline_dashboard.json.tmpl", {
+    aws_region       = var.aws_region,
+    prefix           = var.prefix
+    collector_lb_arn = local.collector_lb_arn_cw_id
+  })
+}

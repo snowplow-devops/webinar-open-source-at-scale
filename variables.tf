@@ -1,3 +1,8 @@
+variable "aws_region" {
+  description = "The region in which the pipeline gets deployed"
+  type        = string
+}
+
 variable "prefix" {
   description = "Will be prefixed to all resource names. Use to easily identify the resources created"
   type        = string
