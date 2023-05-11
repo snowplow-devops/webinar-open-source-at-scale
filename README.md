@@ -27,6 +27,10 @@ There are several exposed settings here that you will need to tune to get ready 
 
 These settings and guidance are provided in the webinar (watch the recording!) but ultimately you need to tune the above settings until the pipeline absorbs all your traffic peaks without latency building up.
 
+## Testing
+
+If you wanted to use [Locust](https://docs.locust.io/en/stable/what-is-locust.html) as we have you can find our plan under the `locust` directory.
+
 ## Requirements
 
 | Name | Version |
